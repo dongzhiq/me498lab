@@ -1,0 +1,1 @@
+Please manually copy your data for lab3 to this directory.
