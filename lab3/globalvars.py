@@ -15,5 +15,3 @@ signal_type = list(type_folders.keys())
 feat_labels = ['welding_pressure', 'pre_height', 'post_height', 'height_change', 
                'time_f1', 'time_f2', 'time_f3', 'time_f4',
               'freq_f1', 'freq_f2', 'freq_f3', 'freq_f4']
-
-sss=1
