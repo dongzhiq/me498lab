@@ -7,10 +7,10 @@ def feature_gen_time(signal, label):
     # total energy
         return np.sum(signal[:,1])*t_step
     elif label == 'time_f2':
-    # average over the latter half part
-        return np.mean(signal[int(l/2):l,1])
+    # mid-point energy
+        return np.mean(signal[1:int(l/2),1])
     elif label == 'time_f3':
-    # standard variation over the latter half part
+    # standard deviation over the latter half part
         return np.std(signal[int(l/2):l,1])
     elif label == 'time_f4':
     # slope of the rising part
@@ -26,19 +26,34 @@ def power_density_spectrum(sig):
     return Y[:int(n/2)+1] # signal power density spectrum
     
 def feature_gen_freq(signal, label):
-    Y = power_density_spectrum(signal[:,1])[:]
+    Y = power_density_spectrum(signal[:,1])[2:]
     
+    # Y[:100]=0
+    # maxY = np.max(Y)
+    # max_index = np.where(Y==maxY)[0][0]
+    # if label == 'freq_f1':        
+        # return max_index
+    # elif label == 'freq_f2':
+        # return np.sum(Y[2800:3100])
+    # else: 
+        # max2Y = np.max(Y)
+        # max2Y_index = np.where(Y==max2Y)[0][0]
+        # if label == 'freq_f3':
+            # return np.sum(Y[5800:6100])
+        # elif label == 'freq_f4':
+            # return np.sum(Y[11800:12000])
+
     maxY = np.max(Y)
     max_index = np.where(Y==maxY)[0][0]
     if label == 'freq_f1':        
         return max_index
     elif label == 'freq_f2':
-        return maxY
+        return np.sum(Y[max_index-20:max_index+20])
     else: 
-        Y[max_index] = 0
+        Y[0:max_index+100] = 0
         max2Y = np.max(Y)
         max2Y_index = np.where(Y==max2Y)[0][0]
         if label == 'freq_f3':
             return max2Y_index
         elif label == 'freq_f4':
-            return max2Y
+            return np.sum(Y[max2Y_index-20:max2Y_index+20])
